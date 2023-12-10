@@ -1,0 +1,20 @@
+.main {
+  height: 100%;
+  margin: 1rem;
+}
+
+.box {
+  outline: 3px solid black;
+}
+
+.widgets + .dashboard {
+  margin-top: 1rem;
+}
+
+.widgets {
+  outline: 1px solid blue;
+}
+
+.dashboard {
+  outline: 1px solid red;
+}
