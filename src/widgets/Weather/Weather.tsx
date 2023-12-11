@@ -8,69 +8,47 @@ import {
 } from '@visx/xychart';
 
 export const Weather = () => {
-  const { data } = useWeather();
+  const { data, isLoading, isError } = useWeather();
 
   const formatData = (dataX: any, dataY: any) => {
-    return dataX?.map((data: any, index: number) => ({
-      x: dataX[index],
-      y: dataY[index],
-    }));
+    return dataX?.map((data: any, index: number) => {
+      const time = new Date(dataX[index]);
+      return {
+        x: `${time.getHours()}`.padStart(2, '0'),
+        y: dataY[index],
+      }
+    });
   }
 
-  // @ts-ignore
-  console.info(formatData(data?.data?.hourly?.time, data?.data?.hourly?.temperature2m));
-
-  const data1 = [
-    { x: '2020-01-01', y: 50 },
-    { x: '2020-01-02', y: 10 },
-    { x: '2020-01-03', y: 20 },
-  ];
-
-  const data2 = [
-    { x: '2020-01-01', y: 30 },
-    { x: '2020-01-02', y: 40 },
-    { x: '2020-01-03', y: 80 },
-  ];
-
   const accessors = {
-    xAccessor: (d: any) => d.x,
-    yAccessor: (d: any) => d.y,
+    xAccessor: (d?: any) => d ? d.x : null,
+    yAccessor: (d?: any) => d ? d.y : null,
   };
 
   return (
     <>
       <h1>Weather Forecast</h1>
 
-      <XYChart height={300} xScale={{ type: 'band' }} yScale={{ type: 'linear' }}>
-        <AnimatedAxis orientation="bottom" />
-        <AnimatedGrid columns={false} numTicks={4} />
-        {/* @ts-ignore */}
-        <AnimatedLineSeries dataKey="Line 1" data={formatData(data?.data?.hourly?.time, data?.data?.hourly?.temperature2m)} {...accessors} />
-        {/* <AnimatedLineSeries dataKey="Line 2" data={data2} {...accessors} /> */}
-        <Tooltip
-          snapTooltipToDatumX
-          snapTooltipToDatumY
-          showVerticalCrosshair
-          showSeriesGlyphs
-          renderTooltip={({ tooltipData, colorScale }) => (
-            <div>
-              {/* @ts-ignore */}
-              <div style={{ color: colorScale(tooltipData.nearestDatum.key) }}>
-                {/* @ts-ignore */}
-                {tooltipData.nearestDatum.key}
+      {!isLoading && !isError && (
+        <XYChart height={300} xScale={{ type: 'band' }} yScale={{ type: 'linear' }}>
+          <AnimatedAxis orientation="bottom" />
+          <AnimatedGrid columns={false} numTicks={4} />
+          <AnimatedLineSeries dataKey="Line 1" data={formatData(data?.data?.hourly?.time, data?.data?.hourly?.temperature2m)} {...accessors} />
+          <Tooltip
+            snapTooltipToDatumX
+            snapTooltipToDatumY
+            showVerticalCrosshair
+            showSeriesGlyphs
+            renderTooltip={({ tooltipData }) => (
+              <div>
+                {accessors.xAccessor(tooltipData?.nearestDatum?.datum)}
+                {', '}
+                {accessors.yAccessor(tooltipData?.nearestDatum?.datum)}
               </div>
-              {/* @ts-ignore */}
-              {accessors.xAccessor(tooltipData.nearestDatum.datum)}
-              {', '}
-              {/* @ts-ignore */}
-              {accessors.yAccessor(tooltipData.nearestDatum.datum)}
-            </div>
-          )}
-        />
-      </XYChart>
-
-
-      <pre style={{ whiteSpace: 'pre-wrap' }}>{JSON.stringify(data, null, 2)}</pre>
+            )}
+          />
+        </XYChart>
+      )}
     </>
   )
 }
