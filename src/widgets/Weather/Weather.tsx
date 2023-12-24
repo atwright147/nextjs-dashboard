@@ -14,7 +14,7 @@ export const Weather = () => {
     return dataX?.map((data: any, index: number) => {
       const time = new Date(dataX[index]);
       return {
-        x: `${time.getHours()}`.padStart(2, '0'),
+        x: `${time.getHours()}`.padStart(2, '0') + ':00',
         y: dataY[index],
       }
     });
