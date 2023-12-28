@@ -1,6 +1,5 @@
 .main {
   height: 100%;
-  margin: 1rem;
 }
 
 .box {
@@ -17,4 +16,14 @@
 
 .dashboard {
   outline: 1px solid red;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 1rem;
+}
+
+.sidebar {
+  outline: 1px solid green;
 }
