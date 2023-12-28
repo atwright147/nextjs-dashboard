@@ -1,39 +1,67 @@
 import { useWeather } from '@/hooks/weather/useWeather';
+import { Typography } from '@mui/material';
+import { useMeasure } from '@uidotdev/usehooks';
 import {
   AnimatedAxis, // any of these can be non-animated equivalents
   AnimatedGrid,
   AnimatedLineSeries,
-  XYChart,
   Tooltip,
+  XYChart,
 } from '@visx/xychart';
+import { useEffect, useRef } from 'react';
+import styles from './Weather.module.scss';
 
 export const Weather = () => {
+  const [widgetRef, { height: widgetHeight }] = useMeasure();
+  const [headingRef, { height: headingHeight }] = useMeasure();
+  const heightRef = useRef(0);
   const { data, isLoading, isError } = useWeather();
 
+  useEffect(() => {
+    if (widgetHeight && headingHeight) {
+      heightRef.current = widgetHeight - headingHeight;
+    }
+  }, [widgetHeight, headingHeight]);
+
+  // biome-ignore lint/suspicious/noExplicitAny: not sure what these types should be
   const formatData = (dataX: any, dataY: any) => {
+    // biome-ignore lint/suspicious/noExplicitAny: not sure what these types should be
     return dataX?.map((data: any, index: number) => {
       const time = new Date(dataX[index]);
       return {
-        x: `${time.getHours()}`.padStart(2, '0') + ':00',
+        x: `${String(time.getHours()).padStart(2, '0')}:00`,
         y: dataY[index],
-      }
+      };
     });
-  }
+  };
 
   const accessors = {
-    xAccessor: (d?: any) => d ? d.x : null,
-    yAccessor: (d?: any) => d ? d.y : null,
+    // biome-ignore lint/suspicious/noExplicitAny: not sure what these types should be
+    xAccessor: (d?: any) => (d ? d.x : null),
+    // biome-ignore lint/suspicious/noExplicitAny: not sure what these types should be
+    yAccessor: (d?: any) => (d ? d.y : null),
   };
 
   return (
-    <>
-      <h1>Weather Forecast</h1>
+    <div className={styles.widget} ref={widgetRef} style={{ width: 'inherit', height: 'inherit' }}>
+      <Typography variant="h6" component="h2" ref={headingRef}>
+        Weather Forecast
+      </Typography>
 
       {!isLoading && !isError && (
-        <XYChart height={300} xScale={{ type: 'band' }} yScale={{ type: 'linear' }}>
+        <XYChart
+          xScale={{ type: 'band' }}
+          yScale={{ type: 'linear' }}
+          margin={{ top: 10, right: 5, bottom: 5, left: 5 }}
+          height={heightRef.current}
+        >
           <AnimatedAxis orientation="bottom" />
           <AnimatedGrid columns={false} numTicks={4} />
-          <AnimatedLineSeries dataKey="Line 1" data={formatData(data?.data?.hourly?.time, data?.data?.hourly?.temperature2m)} {...accessors} />
+          <AnimatedLineSeries
+            dataKey="Line 1"
+            data={formatData(data?.data?.hourly?.time, data?.data?.hourly?.temperature2m)}
+            {...accessors}
+          />
           <Tooltip
             snapTooltipToDatumX
             snapTooltipToDatumY
@@ -49,6 +77,6 @@ export const Weather = () => {
           />
         </XYChart>
       )}
-    </>
-  )
-}
+    </div>
+  );
+};
