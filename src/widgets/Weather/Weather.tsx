@@ -1,5 +1,5 @@
 import { useWeather } from '@/hooks/weather/useWeather';
-import { Typography } from '@mui/material';
+import { Paper, Typography } from '@mui/material';
 import { useMeasure } from '@uidotdev/usehooks';
 import {
   AnimatedAxis, // any of these can be non-animated equivalents
@@ -43,7 +43,12 @@ export const Weather = () => {
   };
 
   return (
-    <div className={styles.widget} ref={widgetRef} style={{ width: 'inherit', height: 'inherit' }}>
+    <Paper
+      className={styles.widget}
+      ref={widgetRef}
+      style={{ width: 'inherit', height: 'inherit' }}
+      sx={{ p: 1, boxSizing: 'content-box' }}
+    >
       <Typography variant="h6" component="h2" ref={headingRef}>
         Weather Forecast
       </Typography>
@@ -52,7 +57,7 @@ export const Weather = () => {
         <XYChart
           xScale={{ type: 'band' }}
           yScale={{ type: 'linear' }}
-          margin={{ top: 10, right: 5, bottom: 5, left: 5 }}
+          margin={{ top: 5, right: 0, bottom: 5, left: 0 }}
           height={heightRef.current}
         >
           <AnimatedAxis orientation="bottom" />
@@ -77,6 +82,6 @@ export const Weather = () => {
           />
         </XYChart>
       )}
-    </div>
+    </Paper>
   );
 };
