@@ -1,6 +1,5 @@
-import { useQuery } from '@tanstack/react-query';
 import { Weather } from '@/../types/weather.type';
-
+import { useQuery } from '@tanstack/react-query';
 
 const getWeather = async () => {
   const response = await fetch('/api/weather');
@@ -12,4 +11,4 @@ export const useWeather = () => {
     queryKey: ['weather', 'all'],
     queryFn: getWeather,
   });
-}
+};
