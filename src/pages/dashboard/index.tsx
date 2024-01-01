@@ -5,6 +5,7 @@ import GridLayout, { Layout } from 'react-grid-layout';
 import 'react-grid-layout/css/styles.css';
 import { Widget } from '../../components/Widget/Widget';
 import { WeatherVictory } from '../../widgets/WeatherVictory/WeatherVictory';
+import { WeatherVisx } from '../../widgets/WeatherVisx/WeatherVisx';
 import { config } from '../dashboard/dashboard.config';
 import styles from './index.module.scss';
 
@@ -32,7 +33,8 @@ export default function Page() {
     { i: 'a', x: 0, y: 0, w: 1, h: 2, static: true },
     { i: 'b', x: 1, y: 0, w: 3, h: 2, minW: 2, maxW: 4 },
     { i: 'c', x: 4, y: 0, w: 1, h: 2 },
-    { i: 'weather', x: 0, y: 1, w: 3, h: 3, minW: 3, minH: 3 },
+    { i: 'weather-victory', x: 0, y: 1, w: 6, h: 10, minW: 3, minH: 3 },
+    { i: 'weather-visx', x: 8, y: 2, w: 4, h: 6, minW: 3, minH: 3 },
   ]);
 
   const generateDOM = (layout: Layout[]): JSX.Element[] => {
@@ -47,12 +49,23 @@ export default function Page() {
             </Paper>
           );
 
-        case 'weather':
+        case 'weather-victory':
           return (
             <div key={item.i}>
               <WeatherVictory key={item.i} />
             </div>
           );
+
+        case 'weather-visx':
+          return (
+            <div key={item.i}>
+              <WeatherVisx key={item.i} />
+            </div>
+          );
+
+        default:
+          console.info('Error: Unhandled widget', item);
+          break;
       }
       return (
         <div key={item.i} data-grid={item} className={classNames(styles.box)}>
