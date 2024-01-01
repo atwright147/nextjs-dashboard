@@ -4,7 +4,7 @@ import { useState } from 'react';
 import GridLayout, { Layout } from 'react-grid-layout';
 import 'react-grid-layout/css/styles.css';
 import { Widget } from '../../components/Widget/Widget';
-import { Weather } from '../../widgets/Weather/Weather';
+import { WeatherVictory } from '../../widgets/WeatherVictory/WeatherVictory';
 import { config } from '../dashboard/dashboard.config';
 import styles from './index.module.scss';
 
@@ -50,7 +50,7 @@ export default function Page() {
         case 'weather':
           return (
             <div key={item.i}>
-              <Weather key={item.i} />
+              <WeatherVictory key={item.i} />
             </div>
           );
       }

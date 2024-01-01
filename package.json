@@ -26,7 +26,8 @@
     "react-dom": "^18",
     "react-grid-layout": "^1.4.4",
     "react-spring": "^9.7.3",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "victory": "^36.7.0"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.4.1",

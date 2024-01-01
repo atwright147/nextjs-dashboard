@@ -1,5 +1,5 @@
 import { CurrencyExchange } from '../../widgets/CurrencyExchange/CurrencyExchange';
-import { Weather } from '../../widgets/Weather/Weather';
+import { WeatherVictory } from '../../widgets/WeatherVictory/WeatherVictory';
 
 export const config = {
   widgets: [
@@ -9,7 +9,7 @@ export const config = {
       widget: 'Weather',
       minW: 5,
       minH: 3,
-      component: <Weather />,
+      component: <WeatherVictory />,
     },
     {
       id: 'currency-exchange',
@@ -20,4 +20,4 @@ export const config = {
       component: <CurrencyExchange />,
     },
   ],
-}
+};
