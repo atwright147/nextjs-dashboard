@@ -9,9 +9,9 @@ import {
   XYChart,
 } from '@visx/xychart';
 import { useEffect, useRef } from 'react';
-import styles from './Weather.module.scss';
+import styles from './WeatherVisx.module.scss';
 
-export const Weather = () => {
+export const WeatherVisx = () => {
   const [widgetRef, { height: widgetHeight }] = useMeasure();
   const [headingRef, { height: headingHeight }] = useMeasure();
   const heightRef = useRef(0);
