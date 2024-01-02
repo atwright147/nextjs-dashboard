@@ -1,4 +1,4 @@
-import { Weather } from '@/../types/weather.type';
+import { Weather } from '@/types/weather.type';
 import { useQuery } from '@tanstack/react-query';
 
 const getWeather = async () => {

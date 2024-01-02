@@ -19,7 +19,7 @@ export const WeatherVisx = () => {
 
   useEffect(() => {
     if (widgetHeight && headingHeight) {
-      heightRef.current = widgetHeight - headingHeight;
+      heightRef.current = Math.abs(widgetHeight - headingHeight);
     }
   }, [widgetHeight, headingHeight]);
 
@@ -44,23 +44,24 @@ export const WeatherVisx = () => {
 
   return (
     <Paper
+      component="section"
       className={styles.widget}
       ref={widgetRef}
       style={{ width: 'inherit', height: 'inherit' }}
-      sx={{ p: 1, boxSizing: 'content-box' }}
+      sx={{ p: 1, boxSizing: 'border-box' }}
     >
-      <Typography variant="h6" component="h2" ref={headingRef}>
-        Weather Forecast
+      <Typography variant="h6" component="h1" ref={headingRef}>
+        Weather Forecast (Visx)
       </Typography>
 
       {!isLoading && !isError && (
         <XYChart
           xScale={{ type: 'band' }}
           yScale={{ type: 'linear' }}
-          margin={{ top: 5, right: 0, bottom: 5, left: 0 }}
+          margin={{ top: 40, right: 0, bottom: 60, left: 0 }}
           height={heightRef.current}
         >
-          <AnimatedAxis orientation="bottom" />
+          <AnimatedAxis orientation="bottom" label="time" />
           <AnimatedGrid columns={false} numTicks={4} />
           <AnimatedLineSeries
             dataKey="Line 1"

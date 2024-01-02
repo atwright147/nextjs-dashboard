@@ -3,7 +3,7 @@ import { Paper, Typography } from '@mui/material';
 import { useMeasure } from '@uidotdev/usehooks';
 import { useEffect, useRef } from 'react';
 import { VictoryAxis, VictoryChart, VictoryLine, VictoryTooltip } from 'victory';
-import { Weather as WeatherType } from '../../../types/weather.type';
+import { Weather as WeatherType } from '../../types/weather.type';
 import styles from './WeatherVictory.module.scss';
 
 export const WeatherVictory = () => {
@@ -12,11 +12,9 @@ export const WeatherVictory = () => {
   const heightRef = useRef(0);
   const { data, isLoading, isError } = useWeather();
 
-  console.info(data);
-
   useEffect(() => {
     if (widgetHeight && headingHeight) {
-      heightRef.current = widgetHeight - headingHeight;
+      heightRef.current = Math.abs(widgetHeight - headingHeight);
     }
   }, [widgetHeight, headingHeight]);
 
@@ -36,13 +34,14 @@ export const WeatherVictory = () => {
 
   return (
     <Paper
+      component="section"
       className={styles.widget}
       ref={widgetRef}
       style={{ width: 'inherit', height: 'inherit' }}
-      sx={{ p: 1, boxSizing: 'content-box' }}
+      sx={{ p: 1, boxSizing: 'border-box' }}
     >
-      <Typography variant="h6" component="h2" ref={headingRef}>
-        Weather Forecast
+      <Typography variant="h6" component="h1" ref={headingRef}>
+        Weather Forecast (Victory)
       </Typography>
 
       {!isLoading && !isError && (

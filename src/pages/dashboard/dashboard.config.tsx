@@ -1,15 +1,24 @@
 import { CurrencyExchange } from '../../widgets/CurrencyExchange/CurrencyExchange';
 import { WeatherVictory } from '../../widgets/WeatherVictory/WeatherVictory';
+import { WeatherVisx } from '../../widgets/WeatherVisx/WeatherVisx';
 
 export const config = {
   widgets: [
     {
-      id: 'weather',
-      name: 'Weather',
-      widget: 'Weather',
+      id: 'weather-victory',
+      name: 'Weather Victory',
+      widget: 'WeatherVictory',
       minW: 5,
-      minH: 3,
+      minH: 5,
       component: <WeatherVictory />,
+    },
+    {
+      id: 'weather-visx',
+      name: 'Weather Visx',
+      widget: 'WeatherVisx',
+      minW: 5,
+      minH: 5,
+      component: <WeatherVisx />,
     },
     {
       id: 'currency-exchange',
