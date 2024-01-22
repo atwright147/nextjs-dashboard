@@ -21,6 +21,14 @@ export const config = {
       component: <WeatherVisx />,
     },
     {
+      id: 'weather-echarts',
+      name: 'Weather eCharts',
+      widget: 'WeatherECharts',
+      minW: 5,
+      minH: 5,
+      component: <WeatherVisx />,
+    },
+    {
       id: 'currency-exchange',
       name: 'Currency Exchange',
       widget: 'CurrencyExchange',
