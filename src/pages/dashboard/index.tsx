@@ -4,6 +4,7 @@ import { useState } from 'react';
 import GridLayout, { Layout } from 'react-grid-layout';
 import 'react-grid-layout/css/styles.css';
 import { v4 as uuidv4, v5 as uuidv5 } from 'uuid';
+import { ReactECharts } from '../../components/ReactECharts/ReactECharts';
 import { Widget } from '../../components/Widget/Widget';
 import { useNotificationsStore } from '../../stores/notifications.store';
 import { WeatherVictory } from '../../widgets/WeatherVictory/WeatherVictory';
@@ -85,6 +86,31 @@ export default function Page() {
           );
         }
 
+        case 'weather-echarts': {
+          // const KEY = uuidv5(`${item.i}-${index}`, UUID);
+          return (
+            <div key={item.i} style={{ width: 'inherit', height: 'inherit' }}>
+              <ReactECharts
+                option={{
+                  xAxis: {
+                    type: 'category',
+                    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                  },
+                  yAxis: {
+                    type: 'value',
+                  },
+                  series: [
+                    {
+                      data: [150, 230, 224, 218, 135, 147, 260],
+                      type: 'line',
+                    },
+                  ],
+                }}
+              />
+            </div>
+          );
+        }
+
         default:
           console.info('Error: Unhandled widget', item);
           break;
@@ -141,21 +167,19 @@ export default function Page() {
         </aside>
 
         <main className={styles.main}>
-          <div>
-            <GridLayout
-              className={styles.dashboard}
-              layout={layout}
-              cols={12}
-              rowHeight={30}
-              width={1200}
-              onDrop={onDrop}
-              onResizeStop={onResizeStop}
-              // onLayoutChange={onLayoutChange}
-              isDroppable
-            >
-              {generateDOM(layout)}
-            </GridLayout>
-          </div>
+          <GridLayout
+            className={styles.dashboard}
+            layout={layout}
+            cols={12}
+            rowHeight={30}
+            width={1200}
+            onDrop={onDrop}
+            onResizeStop={onResizeStop}
+            // onLayoutChange={onLayoutChange}
+            isDroppable
+          >
+            {generateDOM(layout)}
+          </GridLayout>
 
           <details>
             <pre>{JSON.stringify(layout, null, 2)}</pre>

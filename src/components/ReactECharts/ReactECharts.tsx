@@ -1,7 +1,10 @@
+import { Paper, Typography } from '@mui/material';
+import { useMeasure } from '@uidotdev/usehooks';
 import { getInstanceByDom, init } from 'echarts';
 import type { ECharts, EChartsOption, SetOptionOpts } from 'echarts';
 import React, { useEffect, useRef } from 'react';
 import type { CSSProperties } from 'react';
+import { useWeather } from '../../hooks/weather/useWeather';
 
 export interface ReactEChartsProps {
   option: EChartsOption;
@@ -15,6 +18,18 @@ export interface ReactEChartsProps {
 export function ReactECharts({ option, style, settings, loading, theme }: ReactEChartsProps): JSX.Element {
   const chartRef = useRef<HTMLDivElement>(null);
   const chart = useRef<ECharts>();
+
+  const [widgetRef, { height: widgetHeight, width: widgetWidth }] = useMeasure();
+  const [headingRef, { height: headingHeight }] = useMeasure();
+  const heightRef = useRef(0);
+  const { data, isLoading, isError } = useWeather();
+
+  useEffect(() => {
+    if (widgetHeight && headingHeight) {
+      // heightRef.current = Math.abs(widgetHeight - headingHeight);
+      chart.current?.resize();
+    }
+  }, [widgetHeight, headingHeight]);
 
   useEffect(() => {
     // Initialize chart
@@ -49,5 +64,18 @@ export function ReactECharts({ option, style, settings, loading, theme }: ReactE
     }
   }, [loading]);
 
-  return <div ref={chartRef} style={{ width: '100%', height: '100%', ...style }} />;
+  return (
+    <Paper
+      component="section"
+      // className={styles.widget}
+      ref={widgetRef}
+      style={{ width: 'inherit', height: 'inherit' }}
+      sx={{ p: 1, boxSizing: 'border-box' }}
+    >
+      <Typography variant="h6" component="h1" ref={headingRef}>
+        Weather Forecast (eCharts)
+      </Typography>
+      <div ref={chartRef} style={{ width: '100%', height: '100%', ...style }} />
+    </Paper>
+  );
 }
