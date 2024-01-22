@@ -99,6 +99,11 @@ export default function Page() {
                   yAxis: {
                     type: 'value',
                   },
+                  grid: {
+                    left: '8%',
+                    right: '4%',
+                    top: '4%',
+                  },
                   series: [
                     {
                       data: [150, 230, 224, 218, 135, 147, 260],
