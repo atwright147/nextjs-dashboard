@@ -1,13 +1,15 @@
-import { Paper, Typography } from '@mui/material';
 import { useMeasure } from '@uidotdev/usehooks';
-import { getInstanceByDom, init } from 'echarts';
+import { init } from 'echarts';
 import type { ECharts, EChartsOption, SetOptionOpts } from 'echarts';
 import React, { useEffect, useRef } from 'react';
 import type { CSSProperties } from 'react';
 import { useWeather } from '../../hooks/weather/useWeather';
 
 export interface ReactEChartsProps {
+  width: number;
+  height: number;
   option: EChartsOption;
+  className?: string;
   style?: CSSProperties;
   settings?: SetOptionOpts;
   loading?: boolean;
@@ -15,38 +17,29 @@ export interface ReactEChartsProps {
 }
 
 // https://dev.to/manufac/using-apache-echarts-with-react-and-typescript-353k
-export function ReactECharts({ option, style, settings, loading, theme }: ReactEChartsProps): JSX.Element {
+export function ReactECharts({ width, height, className, option, style, settings, loading, theme }: ReactEChartsProps): JSX.Element {
   const chartRef = useRef<HTMLDivElement>(null);
   const chart = useRef<ECharts>();
 
-  const [widgetRef, { height: widgetHeight, width: widgetWidth }] = useMeasure();
-  const [headingRef, { height: headingHeight }] = useMeasure();
-  const heightRef = useRef(0);
-  const { data, isLoading, isError } = useWeather();
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    chart.current?.resize({ width, height });
+  }, []);
 
   useEffect(() => {
-    if (widgetHeight && headingHeight) {
-      // heightRef.current = Math.abs(widgetHeight - headingHeight);
-      chart.current?.resize();
+    if (width && height) {
+      chart.current?.resize({ width, height });
     }
-  }, [widgetHeight, headingHeight]);
+  }, [width, height]);
 
   useEffect(() => {
     // Initialize chart
     if (chartRef.current !== null) {
-      chart.current = init(chartRef.current, theme);
+      chart.current = init(chartRef.current, theme, { renderer: 'svg' });
     }
 
-    // Add chart resize listener
-    const resizeChart = () => {
-      chart.current?.resize();
-    };
-    window.addEventListener('resize', resizeChart);
-
-    // Return cleanup function
     return () => {
       chart.current?.dispose();
-      window.removeEventListener('resize', resizeChart);
     };
   }, [theme]);
 
@@ -64,18 +57,5 @@ export function ReactECharts({ option, style, settings, loading, theme }: ReactE
     }
   }, [loading]);
 
-  return (
-    <Paper
-      component="section"
-      // className={styles.widget}
-      ref={widgetRef}
-      style={{ width: 'inherit', height: 'inherit' }}
-      sx={{ p: 1, boxSizing: 'border-box' }}
-    >
-      <Typography variant="h6" component="h1" ref={headingRef}>
-        Weather Forecast (eCharts)
-      </Typography>
-      <div ref={chartRef} style={{ width: '100%', height: '100%', ...style }} />
-    </Paper>
-  );
+  return <div ref={chartRef} style={{ ...style }} className={className} />;
 }

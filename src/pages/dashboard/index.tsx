@@ -7,6 +7,7 @@ import { v4 as uuidv4, v5 as uuidv5 } from 'uuid';
 import { ReactECharts } from '../../components/ReactECharts/ReactECharts';
 import { Widget } from '../../components/Widget/Widget';
 import { useNotificationsStore } from '../../stores/notifications.store';
+import { WeatherEcharts } from '../../widgets/WeatherEcharts/WeatherEcharts';
 import { WeatherVictory } from '../../widgets/WeatherVictory/WeatherVictory';
 import { WeatherVisx } from '../../widgets/WeatherVisx/WeatherVisx';
 import { config } from '../dashboard/dashboard.config';
@@ -90,28 +91,7 @@ export default function Page() {
           // const KEY = uuidv5(`${item.i}-${index}`, UUID);
           return (
             <div key={item.i} style={{ width: 'inherit', height: 'inherit' }}>
-              <ReactECharts
-                option={{
-                  xAxis: {
-                    type: 'category',
-                    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                  },
-                  yAxis: {
-                    type: 'value',
-                  },
-                  grid: {
-                    left: '8%',
-                    right: '4%',
-                    top: '4%',
-                  },
-                  series: [
-                    {
-                      data: [150, 230, 224, 218, 135, 147, 260],
-                      type: 'line',
-                    },
-                  ],
-                }}
-              />
+              <WeatherEcharts />
             </div>
           );
         }
