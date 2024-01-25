@@ -6,9 +6,9 @@ import type { CSSProperties } from 'react';
 import { useWeather } from '../../hooks/weather/useWeather';
 
 export interface ReactEChartsProps {
-  width: number;
-  height: number;
   option: EChartsOption;
+  width?: number;
+  height?: number;
   className?: string;
   style?: CSSProperties;
   settings?: SetOptionOpts;
@@ -20,11 +20,6 @@ export interface ReactEChartsProps {
 export function ReactECharts({ width, height, className, option, style, settings, loading, theme }: ReactEChartsProps): JSX.Element {
   const chartRef = useRef<HTMLDivElement>(null);
   const chart = useRef<ECharts>();
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    chart.current?.resize({ width, height });
-  }, []);
 
   useEffect(() => {
     if (width && height) {
