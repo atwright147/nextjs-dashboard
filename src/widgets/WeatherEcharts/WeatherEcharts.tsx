@@ -26,20 +26,6 @@ export const WeatherEcharts = () => {
     }
   }, [widgetWidth]);
 
-  const formatData = (data: WeatherType | undefined) => {
-    if (!data) return {};
-
-    const { time, temperature2m } = data.data.hourly;
-    const result = time.map((timestamp, index) => ({
-      timestamp: timestamp.split('T')[1].substring(0, 2),
-      // @ts-ignore
-      temperature: temperature2m[index],
-      // @ts-ignore
-      label: `${temperature2m[index]}°C`,
-    }));
-    return result;
-  };
-
   const PADDING_BIG = '20px';
   const PADDING_SMALL = '10px';
 
@@ -59,7 +45,7 @@ export const WeatherEcharts = () => {
               option={{
                 xAxis: {
                   type: 'category',
-                  data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                  data: data?.data.hourly.time,
                 },
                 yAxis: {
                   type: 'value',
@@ -72,7 +58,7 @@ export const WeatherEcharts = () => {
                 },
                 series: [
                   {
-                    data: [150, 230, 224, 218, 135, 147, 260],
+                    data: Object.values(data?.data.hourly.temperature2m ?? []),
                     type: 'line',
                   },
                 ],
