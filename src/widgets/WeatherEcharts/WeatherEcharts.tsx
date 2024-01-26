@@ -26,8 +26,10 @@ export const WeatherEcharts = () => {
     }
   }, [widgetWidth]);
 
-  const PADDING_BIG = '20px';
+  const PADDING_BIG = '45px';
   const PADDING_SMALL = '10px';
+
+  const time = data?.data.hourly.time.map((timestamp) => timestamp.split('T')[1].substring(0, 2));
 
   return (
     <Paper component="section" sx={{ p: 1, boxSizing: 'border-box', height: '100%', position: 'relative' }}>
@@ -45,16 +47,25 @@ export const WeatherEcharts = () => {
               option={{
                 xAxis: {
                   type: 'category',
-                  data: data?.data.hourly.time,
+                  data: time,
+                  name: 'Time',
+                  nameLocation: 'middle',
+                  nameGap: 30,
                 },
                 yAxis: {
                   type: 'value',
+                  name: 'Temperature',
+                  nameLocation: 'middle',
+                  nameGap: 30,
                 },
                 grid: {
                   left: PADDING_BIG,
                   right: PADDING_SMALL,
                   top: PADDING_SMALL,
                   bottom: PADDING_BIG,
+                },
+                tooltip: {
+                  trigger: 'axis',
                 },
                 series: [
                   {
