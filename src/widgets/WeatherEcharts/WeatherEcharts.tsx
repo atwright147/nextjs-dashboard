@@ -2,10 +2,14 @@ import { useWeather } from '@/hooks/weather/useWeather';
 import { Box, Paper, Typography } from '@mui/material';
 import { useMeasure } from '@uidotdev/usehooks';
 import { useEffect, useRef } from 'react';
-
-import { ReactECharts } from '../../components/ReactECharts/ReactECharts';
-import { Weather as WeatherType } from '../../types/weather.type';
 import styles from './WeatherEcharts.module.scss';
+
+import dayjs from 'dayjs';
+import { ReactECharts } from '../../components/ReactECharts/ReactECharts';
+import { Weather as WeatherType } from '../../tyatherEcharts.module.scss';
+
+const advancedFormat = require('dayjs/plugin/advancedFormat');
+dayjs.extend(advancedFormat);
 
 export const WeatherEcharts = () => {
   const [widgetRef, { height: widgetHeight, width: widgetWidth }] = useMeasure();
@@ -29,8 +33,6 @@ export const WeatherEcharts = () => {
   const PADDING_BIG = '45px';
   const PADDING_SMALL = '10px';
 
-  const time = data?.data.hourly.time.map((timestamp) => timestamp.split('T')[1].substring(0, 2));
-
   return (
     <Paper component="section" sx={{ p: 1, boxSizing: 'border-box', height: '100%', position: 'relative' }}>
       <Box className={styles.widget}>
@@ -47,10 +49,13 @@ export const WeatherEcharts = () => {
               option={{
                 xAxis: {
                   type: 'category',
-                  data: time,
+                  data: data?.data.hourly.time,
                   name: 'Time',
                   nameLocation: 'middle',
                   nameGap: 30,
+                  axisLabel: {
+                    formatter: (value) => `${value.split('T')[1].substring(0, 2)}h`,
+                  },
                 },
                 yAxis: {
                   type: 'value',
@@ -59,13 +64,17 @@ export const WeatherEcharts = () => {
                   nameGap: 30,
                 },
                 grid: {
-                  left: PADDING_BIG,
                   right: PADDING_SMALL,
                   top: PADDING_SMALL,
+                  left: PADDING_BIG,
                   bottom: PADDING_BIG,
                 },
                 tooltip: {
                   trigger: 'axis',
+                  valueFormatter: (value) => `${Number(value).toFixed(2)}°C`,
+                  //dayjs('2019-01-25').format('[YYYYescape] YYYY-MM-DDTHH:mm:ssZ[Z]')
+                  formatter: (params) =>
+                    `${dayjs(params[0].axisValueLabel).format('Do MMM YYYY HH:mm[h]')}<br />${Number(params[0].value).toFixed(2)}°C`,
                 },
                 series: [
                   {
