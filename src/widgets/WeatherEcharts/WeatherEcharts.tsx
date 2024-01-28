@@ -30,7 +30,7 @@ export const WeatherEcharts = () => {
     }
   }, [widgetWidth]);
 
-  const PADDING_BIG = '45px';
+  const PADDING_BIG = '50px';
   const PADDING_SMALL = '10px';
 
   return (
@@ -61,7 +61,10 @@ export const WeatherEcharts = () => {
                   type: 'value',
                   name: 'Temperature',
                   nameLocation: 'middle',
-                  nameGap: 30,
+                  nameGap: 35,
+                  axisLabel: {
+                    formatter: (value) => `${value}°C`,
+                  },
                 },
                 grid: {
                   right: PADDING_SMALL,
