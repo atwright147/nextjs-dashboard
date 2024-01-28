@@ -6,7 +6,6 @@ import styles from './WeatherEcharts.module.scss';
 
 import dayjs from 'dayjs';
 import { ReactECharts } from '../../components/ReactECharts/ReactECharts';
-import { Weather as WeatherType } from '../../tyatherEcharts.module.scss';
 
 const advancedFormat = require('dayjs/plugin/advancedFormat');
 dayjs.extend(advancedFormat);
@@ -75,8 +74,8 @@ export const WeatherEcharts = () => {
                 tooltip: {
                   trigger: 'axis',
                   valueFormatter: (value) => `${Number(value).toFixed(2)}°C`,
-                  //dayjs('2019-01-25').format('[YYYYescape] YYYY-MM-DDTHH:mm:ssZ[Z]')
                   formatter: (params) =>
+                    // @ts-ignore
                     `${dayjs(params[0].axisValueLabel).format('Do MMM YYYY HH:mm[h]')}<br />${Number(params[0].value).toFixed(2)}°C`,
                 },
                 series: [
