@@ -22,4 +22,4 @@ const output = json.map((item) => {
     }, {});
 });
 
-fs.writeFileSync(path.join('.', 'data', 'sampledatasafety2.json'), JSON.stringify(output, null, 2));
+fs.writeFileSync(path.join('.', 'data', 'safety.json'), JSON.stringify(output, null, 2));

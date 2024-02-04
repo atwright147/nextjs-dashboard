@@ -18,3 +18,8 @@ Content-Type: {{contentType}}
 
 GET {{apiHost}}/weather?id=abc HTTP/1.1
 Content-Type: {{contentType}}
+
+###
+
+GET {{apiHost}}/safety HTTP/1.1
+Content-Type: {{contentType}}
