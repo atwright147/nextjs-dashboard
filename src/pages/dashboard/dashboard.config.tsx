@@ -36,5 +36,13 @@ export const config = {
       minH: 2,
       component: <CurrencyExchange />,
     },
+    {
+      id: 'safety-gender-echarts',
+      name: 'Safety: Gender Pie (eCharts)',
+      widget: 'SafetyGenderPieECharts',
+      minW: 4,
+      minH: 4,
+      // component: <SafetyGenderPieECharts />,
+    },
   ],
 };

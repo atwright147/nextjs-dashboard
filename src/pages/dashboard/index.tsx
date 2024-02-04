@@ -7,6 +7,7 @@ import { v4 as uuidv4, v5 as uuidv5 } from 'uuid';
 import { ReactECharts } from '../../components/ReactECharts/ReactECharts';
 import { Widget } from '../../components/Widget/Widget';
 import { useNotificationsStore } from '../../stores/notifications.store';
+import { SafetyGenderPieECharts } from '../../widgets/SafetyMaleToFemalePieECharts/SafetyGenderPieECharts';
 import { WeatherEcharts } from '../../widgets/WeatherEcharts/WeatherEcharts';
 import { WeatherVictory } from '../../widgets/WeatherVictory/WeatherVictory';
 import { WeatherVisx } from '../../widgets/WeatherVisx/WeatherVisx';
@@ -92,6 +93,15 @@ export default function Page() {
           return (
             <div key={item.i} style={{ width: 'inherit', height: 'inherit' }}>
               <WeatherEcharts />
+            </div>
+          );
+        }
+
+        case 'safety-gender-echarts': {
+          // const KEY = uuidv5(`${item.i}-${index}`, UUID);
+          return (
+            <div key={item.i} style={{ width: 'inherit', height: 'inherit' }}>
+              <SafetyGenderPieECharts />
             </div>
           );
         }
