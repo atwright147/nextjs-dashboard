@@ -8,6 +8,7 @@ import { ReactECharts } from '../../components/ReactECharts/ReactECharts';
 import { Widget } from '../../components/Widget/Widget';
 import { useNotificationsStore } from '../../stores/notifications.store';
 import { SafetyGenderPieECharts } from '../../widgets/SafetyGenderPieECharts/SafetyGenderPieECharts';
+import { SafetyGenderShiftBarECharts } from '../../widgets/SafetyGenderShiftBarECharts/SafetyGenderShiftBarECharts';
 import { WeatherEcharts } from '../../widgets/WeatherEcharts/WeatherEcharts';
 import { WeatherVictory } from '../../widgets/WeatherVictory/WeatherVictory';
 import { WeatherVisx } from '../../widgets/WeatherVisx/WeatherVisx';
@@ -102,6 +103,15 @@ export default function Page() {
           return (
             <div key={item.i} style={{ width: 'inherit', height: 'inherit' }}>
               <SafetyGenderPieECharts />
+            </div>
+          );
+        }
+
+        case 'safety-gender-shift-echarts': {
+          // const KEY = uuidv5(`${item.i}-${index}`, UUID);
+          return (
+            <div key={item.i} style={{ width: 'inherit', height: 'inherit' }}>
+              <SafetyGenderShiftBarECharts />
             </div>
           );
         }

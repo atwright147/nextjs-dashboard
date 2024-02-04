@@ -38,8 +38,16 @@ export const config = {
     },
     {
       id: 'safety-gender-echarts',
-      name: 'Safety: Gender Pie (eCharts)',
+      name: 'Safety: By Gender Pie (eCharts)',
       widget: 'SafetyGenderPieECharts',
+      minW: 4,
+      minH: 4,
+      // component: <SafetyGenderPieECharts />,
+    },
+    {
+      id: 'safety-gender-shift-echarts',
+      name: 'Safety: By Gender and Shift Bar (eCharts)',
+      widget: 'SafetyGenderShiftBarECharts',
       minW: 4,
       minH: 4,
       // component: <SafetyGenderPieECharts />,

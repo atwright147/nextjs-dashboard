@@ -23,3 +23,8 @@ Content-Type: {{contentType}}
 
 GET {{apiHost}}/safety/gender HTTP/1.1
 Content-Type: {{contentType}}
+
+###
+
+GET {{apiHost}}/safety/gender-shift HTTP/1.1
+Content-Type: {{contentType}}
