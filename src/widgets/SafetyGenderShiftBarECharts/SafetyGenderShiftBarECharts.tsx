@@ -1,14 +1,10 @@
 import { Box, Paper, Typography } from '@mui/material';
 import { useMeasure } from '@uidotdev/usehooks';
 import { useEffect, useRef } from 'react';
-import styles from './SafetyGenderShiftBarECharts.module.scss';
 
-import dayjs from 'dayjs';
+import styles from './SafetyGenderShiftBarECharts.module.scss';
 import { ReactECharts } from '../../components/ReactECharts/ReactECharts';
 import { useSafetyGenderShift } from '../../hooks/safety/useSafetyGenderShift';
-
-const advancedFormat = require('dayjs/plugin/advancedFormat');
-dayjs.extend(advancedFormat);
 
 export const SafetyGenderShiftBarECharts = () => {
   const [widgetRef, { height: widgetHeight, width: widgetWidth }] = useMeasure();

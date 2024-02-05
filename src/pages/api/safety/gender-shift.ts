@@ -19,29 +19,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }, {});
   console.info(count3);
 
-  const series = Object.keys(count3).map((gender) => {
-    return Object.values(count3[gender]);
-  });
+  const series = Object.values(count3).map((item) => Object.values(item)).map((item) => ({
+    type: 'bar',
+    data: item,
+}));
 
   return res.status(200).json({
     xAxis: {
-      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      data: genders,
     },
     yAxis: {},
-    series: [
-      {
-        type: 'bar',
-        data: [23, 24, 18, 25, 27, 28, 25],
-      },
-      {
-        type: 'bar',
-        data: [26, 24, 18, 22, 23, 20, 27],
-      },
-      {
-        type: 'bar',
-        data: [5, 18, 2, 7, 9, 16, 20],
-      },
-    ],
+    series,
   } as EChartsOption);
 }
 
