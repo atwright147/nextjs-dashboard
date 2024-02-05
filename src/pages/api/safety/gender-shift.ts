@@ -3,11 +3,12 @@ import { EChartsOption } from 'echarts';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { counting, unique } from 'radash';
 import safetyStats from '../../../../data/safety.json';
+import { Safety } from '../../../types/safety.types';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const genders = unique(safetyStats, (item) => item.gender).map((item) => item.gender);
 
-  const count3 = safetyStats.reduce((result, item) => {
+  const count3 = (safetyStats as Safety[]).reduce((result, item) => {
     if (!result[item.gender]) {
       result[item.gender] = {};
     }
@@ -16,13 +17,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
     result[item.gender][item.shift] += 1;
     return result;
-  }, {});
+    // biome-ignore lint/suspicious/noExplicitAny: yolo
+  }, {} as any);
   console.info(count3);
 
-  const series = Object.values(count3).map((item) => Object.values(item)).map((item) => ({
-    type: 'bar',
-    data: item,
-}));
+  const series = Object.values(count3)
+    // @ts-ignore
+    .map((outer) => Object.values(outer))
+    .map((inner) => ({
+      type: 'bar',
+      data: inner,
+    }));
 
   return res.status(200).json({
     xAxis: {
@@ -32,24 +37,3 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     series,
   } as EChartsOption);
 }
-
-// {
-//   xAxis: {
-//     data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-//   },
-//   yAxis: {},
-//   series: [
-//     {
-//       type: 'bar',
-//       data: [23, 24, 18, 25, 27, 28, 25],
-//     },
-//     {
-//       type: 'bar',
-//       data: [26, 24, 18, 22, 23, 20, 27],
-//     },
-//     {
-//       type: 'bar',
-//       data: [5, 18, 2, 7, 9, 16, 20],
-//     },
-//   ],
-// }

@@ -1,4 +1,5 @@
 export interface Safety {
+  [key: string]: string | number;
   ageGroup: string;
   date: string;
   day: number;
