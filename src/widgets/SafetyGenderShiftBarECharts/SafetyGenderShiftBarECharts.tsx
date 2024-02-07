@@ -2,16 +2,16 @@ import { Box, Paper, Typography } from '@mui/material';
 import { useMeasure } from '@uidotdev/usehooks';
 import { useEffect, useRef } from 'react';
 
-import styles from './SafetyGenderShiftBarECharts.module.scss';
 import { ReactECharts } from '../../components/ReactECharts/ReactECharts';
-import { useSafetyGenderShift } from '../../hooks/safety/useSafetyGenderShift';
+import { useSafetyByShiftAndGender } from '../../hooks/safety/useSafetyByShiftAndGender';
+import styles from './SafetyGenderShiftBarECharts.module.scss';
 
 export const SafetyGenderShiftBarECharts = () => {
   const [widgetRef, { height: widgetHeight, width: widgetWidth }] = useMeasure();
   const [headingRef, { height: headingHeight }] = useMeasure();
   const heightRef = useRef(0);
   const widthRef = useRef(0);
-  const { data, isLoading, isError } = useSafetyGenderShift();
+  const { data, isLoading, isError } = useSafetyByShiftAndGender();
 
   useEffect(() => {
     if (widgetHeight) {

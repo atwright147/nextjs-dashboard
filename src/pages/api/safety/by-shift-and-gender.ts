@@ -8,25 +8,26 @@ import { Safety } from '../../../types/safety.types';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const genders = unique(safetyStats, (item) => item.gender).map((item) => item.gender);
 
-  const count3 = (safetyStats as Safety[]).reduce((result, item) => {
-    if (!result[item.gender]) {
-      result[item.gender] = {};
+  // count by shift and gender
+  const byShiftGender = (safetyStats as Safety[]).reduce((result, item) => {
+    if (!result[item.shift]) {
+      result[item.shift] = {};
     }
-    if (!result[item.gender][item.shift]) {
-      result[item.gender][item.shift] = 0;
+    if (!result[item.shift][item.gender]) {
+      result[item.shift][item.gender] = 0;
     }
-    result[item.gender][item.shift] += 1;
+    result[item.shift][item.gender] += 1;
     return result;
     // biome-ignore lint/suspicious/noExplicitAny: yolo
   }, {} as any);
-  console.info(count3);
 
-  const series = Object.values(count3)
+  const series = Object.values(byShiftGender)
     // @ts-ignore
     .map((outer) => Object.values(outer))
-    .map((inner) => ({
+    .map((inner, index) => ({
       type: 'bar',
       data: inner,
+      name: `group-${index}`,
     }));
 
   return res.status(200).json({
