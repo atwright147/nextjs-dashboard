@@ -6,6 +6,8 @@ import { ReactECharts } from '../../components/ReactECharts/ReactECharts';
 import { useSafetyByShiftAndGender } from '../../hooks/safety/useSafetyByShiftAndGender';
 import styles from './SafetyGenderShiftBarECharts.module.scss';
 
+// https://apache.github.io/echarts-handbook/en/concepts/dataset/
+
 export const SafetyGenderShiftBarECharts = () => {
   const [widgetRef, { height: widgetHeight, width: widgetWidth }] = useMeasure();
   const [headingRef, { height: headingHeight }] = useMeasure();
